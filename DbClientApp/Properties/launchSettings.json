@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "DbClientApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DB_PASS": "xxx",
+        "DB_NAME": "xxx",
+        "DB_PORT": "5432",
+        "DB_HOST": ".",
+        "DB_USER": "xxx"
+      }
+    }
+  }
+}
