@@ -3,11 +3,11 @@
     "DbClientApp": {
       "commandName": "Project",
       "environmentVariables": {
-        "DB_PASS": "xxx",
-        "DB_NAME": "xxx",
+        "DB_PASS": "xxxx",
+        "DB_NAME": "xxxx",
         "DB_PORT": "5432",
-        "DB_HOST": ".",
-        "DB_USER": "xxx"
+        "DB_HOST": "localhost",
+        "DB_USER": "xxxx"
       }
     }
   }

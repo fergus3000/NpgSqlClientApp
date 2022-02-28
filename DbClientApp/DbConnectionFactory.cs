@@ -6,7 +6,7 @@ namespace DbClientApp
     public interface IConnectionFactory
     {
         void Initialize();
-        NpgsqlConnection GetFutbinConnection();
+        NpgsqlConnection GetConnection();
     }
 
 
@@ -38,7 +38,7 @@ namespace DbClientApp
             _connectionString = connStrBuilder.ToString();
         }
 
-        public NpgsqlConnection GetFutbinConnection() => new NpgsqlConnection(_connectionString);
+        public NpgsqlConnection GetConnection() => new NpgsqlConnection(_connectionString);
 
     }
 
