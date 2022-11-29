@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+//using NLog;
 
 namespace DbClientApp
 {
@@ -20,7 +22,7 @@ namespace DbClientApp
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error'd");
+                    Console.WriteLine("The application thew an exception: " + ex);
                     throw;
                 }
             }
@@ -29,11 +31,17 @@ namespace DbClientApp
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             var host = Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                    logging.AddNLog();
+                })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddLogging(configure => configure.AddConsole());
                     Bootstrapper.Bootstrap(services);
-                }).UseConsoleLifetime();
+                })
+                .UseConsoleLifetime();
             return host;
         }
     }

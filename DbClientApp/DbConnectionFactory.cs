@@ -19,7 +19,6 @@ namespace DbClientApp
         {
             _config = config;
             _logger = logger;
-            // why not just Initialize(); here... its a singleton??
             Initialize();
         }
 
