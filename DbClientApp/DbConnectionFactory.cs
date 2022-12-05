@@ -5,40 +5,25 @@ namespace DbClientApp
 {
     public interface IConnectionFactory
     {
-        void Initialize();
-        NpgsqlConnection GetConnection();
+        NpgsqlConnection GetConnection(string appname);
     }
 
 
     public class ConnectionFactory : IConnectionFactory
     {
-        readonly IDbConnectionConfig _config;
+        private readonly IDbConnectionStringProvider _dbConnectionStringProvider;
         readonly ILogger<ConnectionFactory> _logger;
-        string _connectionString;
-        public ConnectionFactory(IDbConnectionConfig config, ILogger<ConnectionFactory> logger)
+
+        public ConnectionFactory(IDbConnectionStringProvider dbConnectionStringProvider, ILogger<ConnectionFactory> logger)
         {
-            _config = config;
+            Npgsql.NpgsqlConnection.GlobalTypeMapper.UseNodaTime();
+            _dbConnectionStringProvider = dbConnectionStringProvider;
             _logger = logger;
-            Initialize();
         }
 
-        public void Initialize()
-        {
-            //NpgsqlConnection.GlobalTypeMapper.UseNodaTime();
-            var connStrBuilder = new NpgsqlConnectionStringBuilder();
-            connStrBuilder.Port = _config.Port;
-            connStrBuilder.Host = _config.Host;
-            connStrBuilder.Username = _config.UserName;
-            connStrBuilder.Password = _config.Password;
-            connStrBuilder.Database = _config.Database;
-            connStrBuilder.MaxPoolSize = 10;
-            var pwLog = string.IsNullOrEmpty(connStrBuilder.Password) ? "NOTSET" : "****";
-            _logger.LogInformation("Initializing Db Conn - Host:{Host} Port:{Port} Db:{Database} User:{User} Pass:{PasswordSet}", connStrBuilder.Host, connStrBuilder.Port, connStrBuilder.Database, connStrBuilder.Username, pwLog);
-            _connectionString = connStrBuilder.ToString();
-        }
-
-        public NpgsqlConnection GetConnection() => new NpgsqlConnection(_connectionString);
-
+        public NpgsqlConnection GetConnection(string appname) => new NpgsqlConnection(_dbConnectionStringProvider.GetConnectionStringForApp(appname));
     }
+
+    
 
 }

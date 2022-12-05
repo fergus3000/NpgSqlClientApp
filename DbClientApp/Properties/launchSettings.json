@@ -2,12 +2,13 @@
   "profiles": {
     "DbClientApp": {
       "commandName": "Project",
+      "commandLineArgs": "",
       "environmentVariables": {
-        "DB_PASS": "xxxx",
-        "DB_NAME": "xxxx",
+        "DB_NAME": "default",
         "DB_PORT": "5432",
         "DB_HOST": "localhost",
-        "DB_USER": "xxxx"
+        "DB_USER": "postgres",
+        "DB_PASS": "postgres"
       }
     }
   }
